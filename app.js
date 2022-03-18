@@ -1,23 +1,14 @@
-function add(num1, num2) {
-    return num1 + num2;
+var userInput;
+var userName;
+userInput = 5;
+userInput = "Mario";
+userName = "Anna";
+//unknownは型チェックをしないといけない。
+if (typeof userInput == "string") {
+    userName = userInput;
 }
-//void型はundefinedを返す。
-function printResult(num) {
-    console.log("Result:".concat(num));
+function generateError(message, errorStatus) {
+    throw { message: message, status: errorStatus };
 }
-printResult(add(1, 3));
-var combineValues;
-combineValues = add;
-// combineValues = printResult;
-console.log(combineValues(7, 7));
-// function printResult(num: number) {
-//   return num;
-// }
-// console.log(printResult(add(1, 3)));
-function addAndHandle(n1, n2, callback) {
-    var result = n1 + n2;
-    callback(result);
-}
-addAndHandle(10, 20, function (num) {
-    console.log("Result:".concat(num));
-});
+var errorResult = generateError("ページが存在しません。", 404);
+console.log(errorResult);
