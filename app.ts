@@ -1,27 +1,33 @@
-function add(
-  num1: number,
-  num2: number,
-  showResult: boolean,
-  showPhrase: string
-) {
-  const result = num1 + num2;
+//なるべく型推論させる
+// const person: {
+//   name: string;
+//   age: number;
+// } = {
+//   name: "ryota",
+//   age: 30,
+// };
 
-  //TypeScriptでは不用
-  if (typeof num1 !== "number" || typeof num2 !== "number") {
-    throw new Error("入力値が正しくありません。");
-  }
+const person: {
+  name: string;
+  age: number;
+  hobbies: string[];
+  role: [number, string];
+} = {
+  name: "ryota",
+  age: 30,
+  hobbies: ["Sports", "Cooking"],
+  role: [2, "author"],
+};
 
-  if (showResult) {
-    console.log(showPhrase + result);
-  } else {
-    return result;
-  }
+//pushはできる
+// person.role.push("aaa");
+// person.role[1] = 10;
+
+let animals: string[];
+animals = ["dog", "cat"];
+
+console.log(person);
+
+for (const hobby of person.hobbies) {
+  console.log(hobby.toUpperCase());
 }
-
-let number1: number;
-number1 = 5;
-const number2 = 3;
-const printResult = true;
-const resultPhrase = "Result is ";
-
-const result = add(number1, number2, printResult, resultPhrase);
