@@ -1,20 +1,23 @@
-//なるべく型推論させる
-// const person: {
-//   name: string;
-//   age: number;
-// } = {
-//   name: "ryota",
-//   age: 30,
-// };
-var person = {
-    name: "ryota",
-    age: 30,
-    hobbies: ["Sports", "Cooking"]
-};
-var animals;
-animals = ["dog", "cat"];
-console.log(person);
-for (var _i = 0, _a = person.hobbies; _i < _a.length; _i++) {
-    var hobby = _a[_i];
-    console.log(hobby.toUpperCase());
+function add(num1, num2) {
+    return num1 + num2;
 }
+//void型はundefinedを返す。
+function printResult(num) {
+    console.log("Result:".concat(num));
+}
+printResult(add(1, 3));
+var combineValues;
+combineValues = add;
+// combineValues = printResult;
+console.log(combineValues(7, 7));
+// function printResult(num: number) {
+//   return num;
+// }
+// console.log(printResult(add(1, 3)));
+function addAndHandle(n1, n2, callback) {
+    var result = n1 + n2;
+    callback(result);
+}
+addAndHandle(10, 20, function (num) {
+    console.log("Result:".concat(num));
+});

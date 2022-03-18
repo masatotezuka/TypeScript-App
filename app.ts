@@ -1,33 +1,32 @@
-//なるべく型推論させる
-// const person: {
-//   name: string;
-//   age: number;
-// } = {
-//   name: "ryota",
-//   age: 30,
-// };
-
-const person: {
-  name: string;
-  age: number;
-  hobbies: string[];
-  role: [number, string];
-} = {
-  name: "ryota",
-  age: 30,
-  hobbies: ["Sports", "Cooking"],
-  role: [2, "author"],
-};
-
-//pushはできる
-// person.role.push("aaa");
-// person.role[1] = 10;
-
-let animals: string[];
-animals = ["dog", "cat"];
-
-console.log(person);
-
-for (const hobby of person.hobbies) {
-  console.log(hobby.toUpperCase());
+function add(num1: number, num2: number) {
+  return num1 + num2;
 }
+
+//void型はundefinedを返す。
+function printResult(num: number): void {
+  console.log(`Result:${num}`);
+}
+
+printResult(add(1, 3));
+
+let combineValues: (a: number, b: number) => number;
+
+combineValues = add;
+// combineValues = printResult;
+
+console.log(combineValues(7, 7));
+
+// function printResult(num: number) {
+//   return num;
+// }
+
+// console.log(printResult(add(1, 3)));
+
+function addAndHandle(n1: number, n2: number, callback: (num: number) => void) {
+  const result = n1 + n2;
+  callback(result);
+}
+
+addAndHandle(10, 20, (num) => {
+  console.log(`Result:${num}`);
+});
