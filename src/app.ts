@@ -3,9 +3,11 @@ let userName: string;
 
 userInput = 5;
 userInput = "Mario";
+userInput = "maa";
 
 userName = "Anna";
 
+console.log(userInput);
 //unknownは型チェックをしないといけない。
 if (typeof userInput == "string") {
   userName = userInput;

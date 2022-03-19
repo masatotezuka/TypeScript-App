@@ -1,8 +1,11 @@
-var userInput;
-var userName;
+"use strict";
+let userInput;
+let userName;
 userInput = 5;
 userInput = "Mario";
+userInput = "maa";
 userName = "Anna";
+console.log(userInput);
 //unknownは型チェックをしないといけない。
 if (typeof userInput == "string") {
     userName = userInput;
@@ -10,5 +13,5 @@ if (typeof userInput == "string") {
 function generateError(message, errorStatus) {
     throw { message: message, status: errorStatus };
 }
-var errorResult = generateError("ページが存在しません。", 404);
+const errorResult = generateError("ページが存在しません。", 404);
 console.log(errorResult);
