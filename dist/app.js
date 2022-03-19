@@ -1,38 +1,30 @@
 "use strict";
-// type AddFun = (a: number, b: number) => number;
-var add;
-add = function (n1, n2) {
-    return n1 + n2;
+// const add = (a: number, b: number = 5) => a + b;
+// console.log(add(1));
+const hobbies = ["Sports", "Cooking"];
+const activeHobbies = ["Walking"];
+activeHobbies.push(...hobbies);
+console.log(activeHobbies);
+const person = {
+    name: "Max",
+    age: 34,
 };
-console.log(add(1, 2));
-var user1;
-user1 = {
-    name: "Mike",
-    age: 23,
-    greet: function (text) {
-        console.log("".concat(text, ". My name is ").concat(this.name));
-    },
+console.log(person);
+const copiedPerson = Object.assign({ sex: "male" }, person);
+console.log("新しくオブジェクトを作成" + copiedPerson);
+const add = (...numbers) => {
+    return numbers.reduce((currentResult, currentValue) => {
+        return currentResult + currentValue;
+    }, 0);
 };
-user1.greet("Hello!");
-//interfaceはマージできる。
-// interface Greetable extends Named, AnotherInterface {
-//   greet(text: string): void;
-// }
-var Human = /** @class */ (function () {
-    function Human(name) {
-        this.age = 30;
-        this.name = name;
-        if (name) {
-            this.name = name;
-        }
-    }
-    Human.prototype.greet = function (text) {
-        if (this.name) {
-            console.log("".concat(text, ". My name is ").concat(this.name));
-        }
-    };
-    return Human;
-}());
-var user2;
-user2 = new Human("Anna");
-user2.greet("Hello!");
+const addNumbers = add(1, 2, 3, 4);
+console.log(addNumbers);
+const animals = ["cat", "dog", "bird", "kirin"];
+const [animal1, anima2, ...remainingAnimal] = animals;
+console.log(animal1, anima2, remainingAnimal, animals);
+const profile = {
+    firstName: "Yamada",
+    age: 24,
+};
+const { firstName, age } = profile;
+console.log(firstName, profile);

@@ -1,64 +1,45 @@
-// type AddFun = (a: number, b: number) => number;
+// const add = (a: number, b: number = 5) => a + b;
 
-interface AddFun {
-  (a: number, b: number): number;
-}
+// console.log(add(1));
 
-let add: AddFun;
-add = (n1: number, n2: number) => {
-  return n1 + n2;
-};
-console.log(add(1, 2));
+const hobbies = ["Sports", "Cooking"];
+const activeHobbies = ["Walking"];
 
-interface Person {
-  name: string;
-  age: number;
-  greet(text: string): void;
-}
+activeHobbies.push(...hobbies);
+console.log(activeHobbies);
 
-let user1: Person;
-
-user1 = {
-  name: "Mike",
-  age: 23,
-  greet(text: string) {
-    console.log(`${text}. My name is ${this.name}`);
-  },
+const person = {
+  name: "Max",
+  age: 34,
 };
 
-user1.greet("Hello!");
+console.log(person);
+const copiedPerson = {
+  sex: "male",
+  ...person,
+};
+console.log("新しくオブジェクトを作成" + copiedPerson);
 
-interface Named {
-  readonly name?: string;
-  outputName?: string;
-}
+const add = (...numbers: number[]) => {
+  return numbers.reduce((currentResult, currentValue) => {
+    return currentResult + currentValue;
+  }, 0);
+};
 
-interface Greetable extends Named {
-  greet(text: string): void;
-}
+const addNumbers = add(1, 2, 3, 4);
 
-//interfaceはマージできる。
-// interface Greetable extends Named, AnotherInterface {
-//   greet(text: string): void;
-// }
+console.log(addNumbers);
 
-class Human implements Greetable {
-  name: string;
-  age: number = 30;
-  constructor(name: string) {
-    this.name = name;
-    if (name) {
-      this.name = name;
-    }
-  }
-  greet(text: string): void {
-    if (this.name) {
-      console.log(`${text}. My name is ${this.name}`);
-    }
-  }
-}
+const animals = ["cat", "dog", "bird", "kirin"];
 
-let user2: Greetable;
+const [animal1, anima2, ...remainingAnimal] = animals;
+console.log(animal1, anima2, remainingAnimal, animals);
 
-user2 = new Human("Anna");
-user2.greet("Hello!");
+const profile = {
+  firstName: "Yamada",
+  age: 24,
+};
+
+const { firstName, age } = profile;
+
+console.log(firstName, profile);
