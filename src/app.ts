@@ -1,4 +1,5 @@
-class Department {
+//abstractクラスはインスタンス化できない
+abstract class Department {
   // private id: string;
   // name: string;
   //publicはデフォルト。JsにはPublicとPrivateのの概念はない。
@@ -7,14 +8,12 @@ class Department {
   static crateEmployee(name: string) {
     return { name: name };
   }
-  constructor(private readonly id: string, public name: string) {
+  constructor(protected readonly id: string, public name: string) {
     // this.id = id;
     // this.name = name;
     console.log(Department.year);
   }
-  describe(this: Department, year: number) {
-    console.log(`Department(${this.id}) is ${this.name}. ${year} year. `);
-  }
+  abstract describe(this: Department): void;
   addEmployee(employee: string) {
     this.employees.push(employee);
   }
@@ -24,17 +23,8 @@ class Department {
   }
 }
 
-const accounting = new Department("dep1", "Accounting");
 const employee1 = Department.crateEmployee("Jack");
 console.log(employee1, Department.year);
-
-console.log(accounting);
-
-accounting.describe(45);
-
-accounting.addEmployee("Max");
-accounting.addEmployee("Mike");
-accounting.printEmployeeInformation();
 
 //クラスの継承
 class ITDepartment extends Department {
@@ -43,9 +33,13 @@ class ITDepartment extends Department {
     super(id, "IT");
     this.admins = admins;
   }
+  describe(): void {
+    console.log("IT部門-ID:" + this.id);
+  }
 }
 
 const ITAccounting = new ITDepartment("d1", ["Max"]);
+ITAccounting.describe();
 console.log(ITAccounting);
 
 class customerDepartment extends Department {
@@ -68,6 +62,9 @@ class customerDepartment extends Department {
     super(id, "customer");
     this.lastReport = reports[0];
   }
+  describe(): void {
+    console.log("CS部門-ID:" + this.id);
+  }
   addReport(text: string) {
     this.reports.push(text);
     this.lastReport = text;
@@ -84,20 +81,5 @@ class customerDepartment extends Department {
   }
 }
 const customer = new customerDepartment("dep2", []);
-console.log(customer);
 
-customer.addReport("texttext....");
-customer.mostRecentReport = "レポート";
-console.log(customer.mostRecentReport);
-customer.printResult();
-console.log(customer);
-
-customer.addEmployee("Max");
-customer.addEmployee("mike");
-customer.printEmployeeInformation();
-
-//クラスDepartment内でのみアクセス可能
-// accounting.employees[2] = "Anna";
-
-// const accountingCopy = { name: "Dummy", describe: accounting.describe };
-// accountingCopy.describe(23);
+customer.describe();

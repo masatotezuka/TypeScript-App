@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+//abstractクラスはインスタンス化できない
 var Department = /** @class */ (function () {
     function Department(id, name) {
         this.id = id;
@@ -29,9 +30,6 @@ var Department = /** @class */ (function () {
     Department.crateEmployee = function (name) {
         return { name: name };
     };
-    Department.prototype.describe = function (year) {
-        console.log("Department(".concat(this.id, ") is ").concat(this.name, ". ").concat(year, " year. "));
-    };
     Department.prototype.addEmployee = function (employee) {
         this.employees.push(employee);
     };
@@ -42,14 +40,8 @@ var Department = /** @class */ (function () {
     Department.year = 2020;
     return Department;
 }());
-var accounting = new Department("dep1", "Accounting");
 var employee1 = Department.crateEmployee("Jack");
 console.log(employee1, Department.year);
-console.log(accounting);
-accounting.describe(45);
-accounting.addEmployee("Max");
-accounting.addEmployee("Mike");
-accounting.printEmployeeInformation();
 //クラスの継承
 var ITDepartment = /** @class */ (function (_super) {
     __extends(ITDepartment, _super);
@@ -58,9 +50,13 @@ var ITDepartment = /** @class */ (function (_super) {
         _this.admins = admins;
         return _this;
     }
+    ITDepartment.prototype.describe = function () {
+        console.log("IT部門-ID:" + this.id);
+    };
     return ITDepartment;
 }(Department));
 var ITAccounting = new ITDepartment("d1", ["Max"]);
+ITAccounting.describe();
 console.log(ITAccounting);
 var customerDepartment = /** @class */ (function (_super) {
     __extends(customerDepartment, _super);
@@ -86,6 +82,9 @@ var customerDepartment = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
+    customerDepartment.prototype.describe = function () {
+        console.log("CS部門-ID:" + this.id);
+    };
     customerDepartment.prototype.addReport = function (text) {
         this.reports.push(text);
         this.lastReport = text;
@@ -104,16 +103,4 @@ var customerDepartment = /** @class */ (function (_super) {
     return customerDepartment;
 }(Department));
 var customer = new customerDepartment("dep2", []);
-console.log(customer);
-customer.addReport("texttext....");
-customer.mostRecentReport = "レポート";
-console.log(customer.mostRecentReport);
-customer.printResult();
-console.log(customer);
-customer.addEmployee("Max");
-customer.addEmployee("mike");
-customer.printEmployeeInformation();
-//クラスDepartment内でのみアクセス可能
-// accounting.employees[2] = "Anna";
-// const accountingCopy = { name: "Dummy", describe: accounting.describe };
-// accountingCopy.describe(23);
+customer.describe();
