@@ -1,64 +1,131 @@
-// type AddFun = (a: number, b: number) => number;
-
-interface AddFun {
-  (a: number, b: number): number;
-}
-
-let add: AddFun;
-add = (n1: number, n2: number) => {
-  return n1 + n2;
-};
-console.log(add(1, 2));
-
-interface Person {
+//Interaction型　type = A & B
+//Union型　type = A | B
+type Admin = {
   name: string;
-  age: number;
-  greet(text: string): void;
-}
-
-let user1: Person;
-
-user1 = {
-  name: "Mike",
-  age: 23,
-  greet(text: string) {
-    console.log(`${text}. My name is ${this.name}`);
-  },
+  privileges: string[];
 };
 
-user1.greet("Hello!");
+type Employee = {
+  name: string;
+  startDate: Date;
+};
 
-interface Named {
-  readonly name?: string;
-  outputName?: string;
+type ElevatedEmployee = Admin & Employee;
+
+//各オブジェクト型で定義されたプロパティ全てを含む新たな型を定義します。
+// プロパティに過不足があるとエラーになります。
+//オブジェクトのプロパティを結合
+const e1: ElevatedEmployee = {
+  name: "Max",
+  privileges: ["create-server"],
+  startDate: new Date(),
+};
+
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+//共通部分の型（number型）
+//れぞれのUnion型で共通しているプリミティブ型が利用できる。
+type Universal = Combinable & Numeric;
+
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === "string" || typeof b === "string") {
+    return a.toString() + b.toString();
+  }
+  return a + b;
 }
 
-interface Greetable extends Named {
-  greet(text: string): void;
+//Type Guard
+type UnknownEmployee = Admin | Employee;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log(emp.name);
+  if ("privileges" in emp) {
+    console.log("Privileges" + emp.privileges);
+  }
+  if ("startDate" in emp) {
+    console.log("StartDate" + emp.startDate);
+  }
 }
 
-//interfaceはマージできる。
-// interface Greetable extends Named, AnotherInterface {
-//   greet(text: string): void;
+printEmployeeInformation({ name: "Mike", startDate: new Date() });
+
+class Car {
+  drive() {
+    console.log("車を運転中...");
+  }
+}
+
+class Truck {
+  drive() {
+    console.log("トラックを運転中...");
+  }
+  loadCargo(amount: number) {
+    console.log("荷物を載せています..." + amount);
+  }
+}
+
+type Vehicle = Car | Truck;
+
+const v1 = new Car();
+const v2 = new Truck();
+
+// function useVehicle(vehicle: Vehicle) {
+//   vehicle.drive();
+//   if ("loadCargo" in vehicle) vehicle.loadCargo(1000);
 // }
 
-class Human implements Greetable {
-  name: string;
-  age: number = 30;
-  constructor(name: string) {
-    this.name = name;
-    if (name) {
-      this.name = name;
-    }
-  }
-  greet(text: string): void {
-    if (this.name) {
-      console.log(`${text}. My name is ${this.name}`);
-    }
-  }
+// interfaceはできない。
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive();
+  if (vehicle instanceof Truck) vehicle.loadCargo(1000);
 }
 
-let user2: Greetable;
+useVehicle(v1);
+useVehicle(v2);
 
-user2 = new Human("Anna");
-user2.greet("Hello!");
+//Discriminated Unions
+interface Bird {
+  type: "bird";
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: "horse";
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed;
+  switch (animal.type) {
+    case "bird":
+      speed = animal.flyingSpeed;
+      break;
+    case "horse":
+      speed = animal.runningSpeed;
+  }
+  console.log(animal.type + "移動のスピード:" + speed);
+}
+
+moveAnimal({ type: "bird", flyingSpeed: 10 });
+
+// const userInputElement = <HTMLInputElement>(
+//   document.getElementById("user-input")!
+// );
+
+const userInputElement = document.getElementById(
+  "user-input"
+)! as HTMLInputElement;
+userInputElement.value = "こんにちは";
+
+interface ErrorContainer {
+  // id: string;
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: "メールアドレスが正しくありません。",
+  username: "ユーザー名に記号を含めることはできません。",
+};
